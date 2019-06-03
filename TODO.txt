@@ -1,0 +1,5 @@
+1) Token
+2) IP-address
+3) change PW/new user
+4) set all measurements to null except time
+5) spring
