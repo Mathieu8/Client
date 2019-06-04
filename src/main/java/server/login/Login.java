@@ -9,10 +9,11 @@ import java.net.Socket;
 import server.connection.ToServer;
 
 
-public class Login extends ToServer {
+public class Login  {
 	private static Login l = null;
 	private boolean isLogin = false;
 	private Token token = new Token();
+	private ToServer server = ToServer.makeConnection();
 
 	public char[] getToken() {
 		return token.getToken();
@@ -36,7 +37,7 @@ public class Login extends ToServer {
 		boolean temp = false;
 		System.out.println("in tokenValid()");
 
-		if (sendToken()) {
+		if (server.sendToken()) {
 			System.out.println("Token valid ");
 			return true;
 		} else {

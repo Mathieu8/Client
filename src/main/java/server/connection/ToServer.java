@@ -21,17 +21,33 @@ import server.login.Login;
 import server.login.LoginGUI;
 import server.login.Token;
 
-
 /**
  * @author Mathieu
  * @version 09/27/2018
  */
 public class ToServer {
-	protected static String host = "localhost";
-//	private Socket socket;
-//	private ObjectOutputStream objectToServer = null;
-//	private DataOutputStream token = null;
-//	private DataInputStream input = null;
+	protected static String host;
+	private int socketNr;
+	private int objectSocketNr;
+	private static ToServer conn = new ToServer();
+	Data data = new Data();
+	
+	protected void refreshData() {
+		
+		host = data.getHostname();
+		socketNr = data.getSocket();
+		objectSocketNr = data.getObjectSocket();
+	}
+
+	private ToServer() {
+		data.getData();
+		refreshData();
+	}
+
+	public static ToServer makeConnection() {
+
+		return conn;
+	}
 
 	private void sendCharArray(DataOutputStream output, char... cs) throws IOException {
 		output.writeInt(cs.length);
@@ -54,8 +70,8 @@ public class ToServer {
 		GUI.print("in sendObject()");
 		GUI.print("");
 
-		try (Socket socket = new Socket(host, 8002);
-				Socket objectSocket = new Socket(host, 8001);
+		try (Socket socket = new Socket(host, socketNr);
+				Socket objectSocket = new Socket(host, objectSocketNr);
 				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream token = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
@@ -93,9 +109,9 @@ public class ToServer {
 		}
 	}
 
-	protected boolean sendToken() {
-		try (Socket socket = new Socket(host, 8002);
-				Socket objectSocket = new Socket(host, 8001);
+	public boolean sendToken() {
+		try (Socket socket = new Socket(host, socketNr);
+				Socket objectSocket = new Socket(host, objectSocketNr);
 				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
@@ -155,8 +171,8 @@ public class ToServer {
 
 	public boolean sendPW(String User, char[] pw) {
 		System.out.println("in sendPW()");
-		try (Socket socket = new Socket(host, 8002);
-				Socket objectSocket = new Socket(host, 8001);
+		try (Socket socket = new Socket(host, socketNr);
+				Socket objectSocket = new Socket(host, objectSocketNr);
 				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
@@ -201,8 +217,8 @@ public class ToServer {
 
 	public String sendNewAccount(String User, char[] pw, char[] pw2) {
 		System.out.println("in sendNewAccount()");
-		try (Socket socket = new Socket(host, 8002);
-				Socket objectSocket = new Socket(host, 8001);
+		try (Socket socket = new Socket(host, socketNr);
+				Socket objectSocket = new Socket(host, objectSocketNr);
 				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
@@ -242,31 +258,31 @@ public class ToServer {
 		}
 		return null;
 	}
-	
+
 	public String sendChangePW(char[] oldPW, char[] pw, char[] pw2) {
 		System.out.println("in sendNewAccount()");
-		try (Socket socket = new Socket(host, 8002);
-				Socket objectSocket = new Socket(host, 8001);
+		try (Socket socket = new Socket(host, socketNr);
+				Socket objectSocket = new Socket(host, objectSocketNr);
 				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
-			
+
 			System.out.println("sending option = \"sendNewAccount\"");
 			output.writeUTF("ChangePW");
 //			token.flush();
 			System.out.println("sended option = \"sendNewAccount\"");
-			
+
 			System.out.println("sending user");
 			sendCharArray(output, oldPW);
 			System.out.println("sending PW");
 			sendCharArray(output, pw);
-			
+
 			System.out.println("sending PW2");
 			sendCharArray(output, pw2);
-			
+
 			output.flush();
 			pw = null;
-			
+
 			Thread.sleep(10);
 			System.out.println("waiting for conformation");
 			String temp = input.readUTF();
@@ -276,7 +292,7 @@ public class ToServer {
 				new Token().createFile(token);
 			}
 			return temp;
-			
+
 		} catch (IOException e) {
 //			System.out.println("error");
 			// e.printStackTrace();

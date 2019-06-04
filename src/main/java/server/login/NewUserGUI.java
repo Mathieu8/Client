@@ -1,8 +1,6 @@
-
 package server.login;
 
 import java.util.Arrays;
-
 import gui.GUI;
 import gui.WelcomeGUI;
 import javafx.animation.KeyFrame;
@@ -100,7 +98,7 @@ public class NewUserGUI {
 				} else if (Arrays.equals(pw, null) || Arrays.equals(pw2, null)) {
 					temp = "insert all the fields";
 				} else {
-					temp = new ToServer().sendNewAccount(userName, pw, pw2);
+					temp = ToServer.makeConnection().sendNewAccount(userName, pw, pw2);
 				}
 				System.out.println(temp);
 				

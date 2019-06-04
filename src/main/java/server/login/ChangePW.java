@@ -98,7 +98,7 @@ public class ChangePW {
 				if (Arrays.equals(pw, null) || Arrays.equals(pw2, null)) {
 					temp = "insert all the fields";
 				} else {
-					temp = new ToServer().sendChangePW(userName, pw, pw2);
+					temp = ToServer.makeConnection().sendChangePW(userName, pw, pw2);
 				}
 				System.out.println(temp);
 
