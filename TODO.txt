@@ -1,4 +1,14 @@
-2) IP-address
-3) change PW/new user
-4) set all measurements to null except time
-5) spring
+1) 
+IP-address
+
+2) 
+change PW/new user
+
+3)
+set all measurements to null except time
+
+4) 
+remove print()
+
+5)
+spring
