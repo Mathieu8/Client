@@ -148,10 +148,9 @@ public class ChangePW {
 //						lblMessage.setText("Incorrect user or pw.");
 //						lblMessage.setTextFill(Color.RED);
 //					}
-				oldPW.setText("");
+				oldPWfld.setText("");
 				pf.setText("");
 				pf2.setText("");
-
 				event.consume();
 			}
 
