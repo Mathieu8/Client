@@ -29,7 +29,7 @@ public class ChangeServerGUI {
 	Data data = new Data();
 	
 	
-	public Stage initialized() {
+	public void initialized() {
 		data.getData();
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(0, 50, 50, 50));
@@ -108,7 +108,6 @@ public class ChangeServerGUI {
 		
 		Scene scene = new Scene(bp);
 		stage.setScene(scene);
-		return stage;
 	}
 
 	public void showGUI() {

@@ -260,24 +260,24 @@ public class ToServer {
 	}
 
 	public String sendChangePW(char[] oldPW, char[] pw, char[] pw2) {
-		System.out.println("in sendNewAccount()");
+		System.out.println("in sendChangePW()");
 		try (Socket socket = new Socket(host, socketNr);
 				Socket objectSocket = new Socket(host, objectSocketNr);
 				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
 
-			System.out.println("sending option = \"sendNewAccount\"");
+			System.out.println("sending option = \"ChangePW\"");
 			output.writeUTF("ChangePW");
 //			token.flush();
-			System.out.println("sended option = \"sendNewAccount\"");
+			System.out.println("sended option = \"ChangePW\"");
 
-			System.out.println("sending user");
+			System.out.println("sending old PW");
 			sendCharArray(output, oldPW);
-			System.out.println("sending PW");
+			System.out.println("sending new PW");
 			sendCharArray(output, pw);
 
-			System.out.println("sending PW2");
+			System.out.println("sending new PW2");
 			sendCharArray(output, pw2);
 
 			output.flush();
@@ -287,7 +287,7 @@ public class ToServer {
 			System.out.println("waiting for conformation");
 			String temp = input.readUTF();
 			System.out.println("temp is " + temp);
-			if (temp.equals("Welcome")) {
+			if (temp.equals("changed PW")) {
 				String token = input.readUTF();
 				new Token().createFile(token);
 			}

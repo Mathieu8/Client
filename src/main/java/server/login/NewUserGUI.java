@@ -83,6 +83,18 @@ public class NewUserGUI {
 		text.setId("text");
 		// Action for btnLogin
 		
+		Duration d = Duration.seconds(2); // seconds for testing
+		Timeline twoSecondsWonder = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				GUI gui = new GUI();
+				gui.initialize();
+				gui.showStage();
+				new WelcomeGUI().setLoginValid(true);
+				stage.hide();
+			}
+			
+		}));
 		EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -118,19 +130,12 @@ public class NewUserGUI {
 				case "Welcome":
 					lblMessage.setText(temp);
 					lblMessage.setTextFill(Color.GREEN);
-					Duration d = Duration.seconds(2); // seconds for testing
-					Timeline twoSecondsWonder = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent event) {
-							GUI gui = new GUI();
-							gui.initialize();
-							gui.showStage();
-//								fiveSecondsWonder.stop();
-							new WelcomeGUI().setLoginValid(true);
-							stage.hide();
-						}
-					}));
+					twoSecondsWonder.play();
 					
+					new WelcomeGUI().setLoginValid(true);
+					twoSecondsWonder.play();
+					new LoginGUI().resetCounter();
+					WelcomeGUI.hideStage();
 					break;
 				default:
 					lblMessage.setText("error " + temp);

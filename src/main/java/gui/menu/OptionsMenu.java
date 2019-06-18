@@ -4,6 +4,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import server.connection.ChangeServerGUI;
+import server.login.ChangePW;
 import gui.GUI;
 import gui.measurementGUI.MeasurmentGUI;
 
@@ -23,8 +24,12 @@ public class OptionsMenu {
 	
 	private MenuItem testItem() {
 		MenuItem testItem = new MenuItem("Change Password");
+		ChangePW gui = new ChangePW();
+		gui.initialized();
+		
 		testItem.setOnAction(e -> {
 			GUI.print("in change PW");
+			gui.show();
 			//launch GUI to confirm old PW and enter new PW
 			//
 			
@@ -36,7 +41,7 @@ public class OptionsMenu {
 	private MenuItem serverItem() {
 		MenuItem testItem = new MenuItem("Change Server data");
 		ChangeServerGUI gui = new ChangeServerGUI();
-		Stage stage = gui.initialized();
+		gui.initialized();
 		testItem.setOnAction(e -> {
 			GUI.print("Change Server data");
 			gui.showGUI();

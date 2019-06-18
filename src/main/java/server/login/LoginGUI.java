@@ -92,9 +92,8 @@ public class LoginGUI {
 					GUI gui = new GUI();
 					gui.initialize();
 					gui.showStage();
-//						fiveSecondsWonder.stop();
+					new WelcomeGUI().setLoginValid(true);
 					stage.hide();
-
 				}
 			}));
 
@@ -166,7 +165,7 @@ public class LoginGUI {
 		}
 	}
 
-	void resetCounter() {
+	public void resetCounter() {
 		counter = 0;
 	}
 

@@ -29,8 +29,9 @@ import javafx.util.Duration;
 import server.connection.ToServer;
 
 public class ChangePW {
+	Stage stage = new Stage();
 
-	public void newUser(Stage stage) {
+	public void initialized() {
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(0, 50, 50, 50));
 		// Adding HBox
@@ -48,7 +49,7 @@ public class ChangePW {
 		final PasswordField pf = new PasswordField();
 		Label lblPassword2 = new Label("Repeat Password");
 		final PasswordField pf2 = new PasswordField();
-		Button btnLogin = new Button("Create Account");
+		Button btnLogin = new Button("Change Password");
 		final Label lblMessage = new Label();
 		// Adding Nodes to GridPane layout
 		VBox fields = new VBox();
@@ -89,7 +90,7 @@ public class ChangePW {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("in actionhandler");
-				char[] userName = oldPW.getText().toCharArray();
+				char[] oldPWArray = oldPW.getText().toCharArray();
 				String temp = null;
 //					String checkPw = pf.getText().toString();
 				char[] pw = pf.getText().toCharArray();
@@ -98,7 +99,7 @@ public class ChangePW {
 				if (Arrays.equals(pw, null) || Arrays.equals(pw2, null)) {
 					temp = "insert all the fields";
 				} else {
-					temp = ToServer.makeConnection().sendChangePW(userName, pw, pw2);
+					temp = ToServer.makeConnection().sendChangePW(oldPWArray, pw, pw2);
 				}
 				System.out.println(temp);
 
@@ -111,8 +112,8 @@ public class ChangePW {
 					lblMessage.setText("Email is allready in use");
 					lblMessage.setTextFill(Color.RED);
 					break;
-				case "Welcome":
-					lblMessage.setText(temp);
+				case "changed PW":
+					lblMessage.setText("changed PW");
 					lblMessage.setTextFill(Color.GREEN);
 					Duration d = Duration.seconds(2); // seconds for testing
 					Timeline twoSecondsWonder = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
@@ -158,5 +159,9 @@ public class ChangePW {
 		Scene scene = new Scene(bp);
 		stage.setScene(scene);
 
+	}
+
+	public void show() {
+		stage.show();
 	}
 }
