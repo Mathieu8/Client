@@ -1,14 +1,21 @@
-1) 
-IP-address
+SERVER NEW USER email taken
+CLIENT NEW USER email taken
 
-2) 
-change PW/new user
+change PW
 
-3)
-set all measurements to null except time
+TEST set all measurements to null except time
 
-4) 
-remove print()
+SERVERGUI change print() to log file
+CLIENTGUI change print() to log file
 
-5)
-spring
+SPRING
+
+OPIONS enable to add costum activity's
+
+SERVER Options merge on server side part of the new  user and change pw method's
+
+OPTIONS change timer measurement
+
+NEW USER didn't fill in all the data
+
+SQL there are some disallowed char's like -> ' <-
