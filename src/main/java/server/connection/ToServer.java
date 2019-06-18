@@ -259,20 +259,19 @@ public class ToServer {
 		return null;
 	}
 
-	public String sendChangePW(char[] oldPW, char[] pw, char[] pw2) {
+	public String sendChangePW(String username,char[] oldPW, char[] pw, char[] pw2) {
 		System.out.println("in sendNewAccount()");
 		try (Socket socket = new Socket(host, socketNr);
 				Socket objectSocket = new Socket(host, objectSocketNr);
-				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
 
 			System.out.println("sending option = \"sendNewAccount\"");
 			output.writeUTF("ChangePW");
-//			token.flush();
 			System.out.println("sended option = \"sendNewAccount\"");
 
 			System.out.println("sending user");
+			output.writeUTF(username);
 			sendCharArray(output, oldPW);
 			System.out.println("sending PW");
 			sendCharArray(output, pw);

@@ -19,3 +19,8 @@ OPTIONS change timer measurement
 NEW USER didn't fill in all the data
 
 SQL there are some disallowed char's like -> ' <-
+
+documentation
+
+SERVER TOKEN update last login
+SERVER CHECKPW update last login

@@ -42,8 +42,11 @@ public class ChangePW {
 		gridPane.setHgap(5);
 		gridPane.setVgap(5);
 		// Implementing Nodes for GridPane
-		Label lblUserName = new Label("Old Password");
-		final PasswordField oldPW = new PasswordField();
+		Label lblUserName = new Label("Username");
+		final TextField usernameFld = new TextField();
+
+		Label lbloldPW = new Label("Old Password");
+		final PasswordField oldPWfld = new PasswordField();
 		Label lblPassword = new Label("New Password");
 		final PasswordField pf = new PasswordField();
 		Label lblPassword2 = new Label("Repeat Password");
@@ -52,14 +55,16 @@ public class ChangePW {
 		final Label lblMessage = new Label();
 		// Adding Nodes to GridPane layout
 		VBox fields = new VBox();
-
-		gridPane.add(lblUserName, 0, 0);
-		gridPane.add(oldPW, 1, 0);
-		gridPane.add(lblPassword, 0, 1);
-		gridPane.add(pf, 1, 1);
-		gridPane.add(lblPassword2, 0, 2);
-		gridPane.add(pf2, 1, 2);
-		gridPane.add(btnLogin, 3, 2);
+		
+		gridPane.add(lblUserName,0,0);
+		gridPane.add(usernameFld, 1, 0);
+		gridPane.add(lbloldPW, 0, 1);
+		gridPane.add(oldPWfld, 1, 1);
+		gridPane.add(lblPassword, 0, 2);
+		gridPane.add(pf, 1, 2);
+		gridPane.add(lblPassword2, 0, 3);
+		gridPane.add(pf2, 1, 3);
+		gridPane.add(btnLogin, 3, 3);
 		fields.getChildren().add(gridPane);
 		fields.getChildren().add(lblMessage);
 //			gridPane.add(lblMessage, 2, 3);
@@ -89,7 +94,8 @@ public class ChangePW {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("in actionhandler");
-				char[] userName = oldPW.getText().toCharArray();
+				String username = usernameFld.getText();
+				char[] oldPW = oldPWfld.getText().toCharArray();
 				String temp = null;
 //					String checkPw = pf.getText().toString();
 				char[] pw = pf.getText().toCharArray();
@@ -98,7 +104,7 @@ public class ChangePW {
 				if (Arrays.equals(pw, null) || Arrays.equals(pw2, null)) {
 					temp = "insert all the fields";
 				} else {
-					temp = ToServer.makeConnection().sendChangePW(userName, pw, pw2);
+					temp = ToServer.makeConnection().sendChangePW(username,oldPW, pw, pw2);
 				}
 				System.out.println(temp);
 
