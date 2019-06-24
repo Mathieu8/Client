@@ -28,6 +28,20 @@ import javafx.util.Duration;
 import server.connection.ToServer;
 
 public class LoginGUI {
+	Duration d = Duration.seconds(2); 
+
+	Timeline twoSecondsWonder = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
+		@Override
+		public void handle(ActionEvent event) {
+			GUI gui = new GUI();
+			gui.initialize();
+			gui.showStage();
+			stage.hide();
+			
+
+		}
+	}));
+
 	private String Username;
 	private static int counter = 0;
 	private Stage stage;
@@ -85,18 +99,6 @@ public class LoginGUI {
 			btnLogin.setDefaultButton(true);
 			text.setId("text");
 			// Action for btnLogin
-			Duration d = Duration.seconds(2); // seconds for testing
-			Timeline twoSecondsWonder = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					GUI gui = new GUI();
-					gui.initialize();
-					gui.showStage();
-//						fiveSecondsWonder.stop();
-					stage.hide();
-
-				}
-			}));
 
 			EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 				@Override
@@ -113,11 +115,8 @@ public class LoginGUI {
 					if (temp) {
 						new WelcomeGUI().setLoginValid(temp);
 						lblMessage.setText("Congratulations!");
-
+						startTimer();
 						lblMessage.setTextFill(Color.GREEN);
-						twoSecondsWonder.play();
-						resetCounter();
-						WelcomeGUI.hideStage();
 
 					} else {
 						lblMessage.setText("Incorrect user or pw.");
@@ -143,7 +142,6 @@ public class LoginGUI {
 			// Adding BorderPane to the scene and loading CSS
 			scene = new Scene(bp);
 //			scene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
-			stage.setScene(scene);
 			stage.titleProperty()
 					.bind(scene.widthProperty().asString().concat(" : ").concat(scene.heightProperty().asString()));
 			// stage.setResizable(false);
@@ -160,6 +158,7 @@ public class LoginGUI {
 	}
 
 	public void show() {
+		stage.setScene(scene);
 		if (counter == 0) {
 			stage.show();
 			counter = 1;
@@ -168,6 +167,12 @@ public class LoginGUI {
 
 	void resetCounter() {
 		counter = 0;
+	}
+
+	void startTimer() {
+		twoSecondsWonder.play();
+		resetCounter();
+		WelcomeGUI.hideStage();
 	}
 
 }

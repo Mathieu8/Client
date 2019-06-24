@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.CharBuffer;
 import java.sql.Array;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -33,7 +34,6 @@ public class ToServer {
 	Data data = new Data();
 	
 	protected void refreshData() {
-		
 		host = data.getHostname();
 		socketNr = data.getSocket();
 		objectSocketNr = data.getObjectSocket();
@@ -260,27 +260,38 @@ public class ToServer {
 	}
 
 	public String sendChangePW(String username,char[] oldPW, char[] pw, char[] pw2) {
-		System.out.println("in sendNewAccount()");
+		System.out.println("in sendChangePW()");
 		try (Socket socket = new Socket(host, socketNr);
 				Socket objectSocket = new Socket(host, objectSocketNr);
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
 
-			System.out.println("sending option = \"sendNewAccount\"");
+			System.out.println("sending option = \"ChangePW\"");
 			output.writeUTF("ChangePW");
-			System.out.println("sended option = \"sendNewAccount\"");
-
+			System.out.println("sended option = \"ChangePW\"");
+			output.flush();
+			Thread.sleep(10);
 			System.out.println("sending user");
 			output.writeUTF(username);
+			output.flush();
+			Thread.sleep(10);
 			sendCharArray(output, oldPW);
+			output.flush();
+			Thread.sleep(10);
 			System.out.println("sending PW");
 			sendCharArray(output, pw);
+			output.flush();
+			Thread.sleep(10);
 
 			System.out.println("sending PW2");
 			sendCharArray(output, pw2);
-
 			output.flush();
-			pw = null;
+			Thread.sleep(10);
+			
+//			output.flush();
+			Arrays.fill(pw2, '0');
+			Arrays.fill(pw, '0');
+			Arrays.fill(oldPW, '0');
 
 			Thread.sleep(10);
 			System.out.println("waiting for conformation");
@@ -307,5 +318,7 @@ public class ToServer {
 		ts.sendObject(o);
 
 	}
+
+	
 
 }

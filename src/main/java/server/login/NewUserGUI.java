@@ -118,19 +118,7 @@ public class NewUserGUI {
 				case "Welcome":
 					lblMessage.setText(temp);
 					lblMessage.setTextFill(Color.GREEN);
-					Duration d = Duration.seconds(2); // seconds for testing
-					Timeline twoSecondsWonder = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent event) {
-							GUI gui = new GUI();
-							gui.initialize();
-							gui.showStage();
-//								fiveSecondsWonder.stop();
-							new WelcomeGUI().setLoginValid(true);
-							stage.hide();
-						}
-					}));
-					
+					new LoginGUI().startTimer();
 					break;
 				default:
 					lblMessage.setText("error " + temp);

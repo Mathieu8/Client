@@ -4,15 +4,15 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import server.connection.ChangeServerGUI;
+import server.login.ChangePW;
 import gui.GUI;
-import gui.measurementGUI.MeasurmentGUI;
 
 public class OptionsMenu {
 	
 	Menu getOptionsMenu() {
 		Menu options = new Menu("Options");
 		
-	options.getItems().add(testItem());	
+	options.getItems().add(changePWItem());	
 	options.getItems().add(serverItem());	
 		
 		
@@ -21,10 +21,13 @@ public class OptionsMenu {
 		return options;
 	}
 	
-	private MenuItem testItem() {
+	private MenuItem changePWItem() {
 		MenuItem testItem = new MenuItem("Change Password");
+		ChangePW gui = new ChangePW();
+		gui.initialized();
 		testItem.setOnAction(e -> {
 			GUI.print("in change PW");
+			gui.show();
 			//launch GUI to confirm old PW and enter new PW
 			//
 			
@@ -42,14 +45,6 @@ public class OptionsMenu {
 			gui.showGUI();
 			
 		});	
-//		measurment = new MeasurmentGUI();
-//		measurmentGUI = measurment.initialized();
-//		MenuItem testItem = new MenuItem("Measurment");
-//		testItem.setOnAction(e -> {
-//			measurment.setUID(1);
-//			measurment.reset(1);
-//			measurmentGUI.show();
-//		});	
 		
 		return testItem;
 	}

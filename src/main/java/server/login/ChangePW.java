@@ -29,8 +29,9 @@ import javafx.util.Duration;
 import server.connection.ToServer;
 
 public class ChangePW {
-
-	public void newUser(Stage stage) {
+	Stage stage = new Stage();
+	
+	public void initialized() {
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(0, 50, 50, 50));
 		// Adding HBox
@@ -104,7 +105,7 @@ public class ChangePW {
 				if (Arrays.equals(pw, null) || Arrays.equals(pw2, null)) {
 					temp = "insert all the fields";
 				} else {
-					temp = ToServer.makeConnection().sendChangePW(username,oldPW, pw, pw2);
+					temp= ToServer.makeConnection().sendChangePW(username, oldPW, pw, pw2);
 				}
 				System.out.println(temp);
 
@@ -162,6 +163,9 @@ public class ChangePW {
 
 		Scene scene = new Scene(bp);
 		stage.setScene(scene);
-
+	}
+	
+	public void show() {
+		stage.show();
 	}
 }
