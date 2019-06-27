@@ -2,6 +2,8 @@ LOGIN new user doesn't close after entering
 
 change PW
 
+CLIENT getting char arrays from PW fields
+
 TEST set all measurements to null except time
 
 SERVERGUI change print() to log file
@@ -33,3 +35,6 @@ CLIENT CHANGE_PW change pw when pw to old or old hash alghorithm
 SERVER READ_DB add option to select max amount of returns ie be able to only return one
 
 GUI's set relevent part next to each other
+
+SERVER move objectSocket intern to the parts that need it
+CLIENT move objectSocket intern to the parts that need it

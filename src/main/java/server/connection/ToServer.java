@@ -32,7 +32,7 @@ public class ToServer {
 	private int objectSocketNr;
 	private static ToServer conn = new ToServer();
 	Data data = new Data();
-	
+
 	protected void refreshData() {
 		host = data.getHostname();
 		socketNr = data.getSocket();
@@ -143,12 +143,12 @@ public class ToServer {
 //		token.flush();
 		System.out.println("sended option = \"Token\"");
 
-		Thread.sleep(10);
+//		Thread.sleep(10);
 		System.out.println("sending token");
 		sendCharArray(output, tkn);
 
 		System.out.println("sended token");
-		Thread.sleep(10);
+//		Thread.sleep(10);
 		output.writeUTF(meta[1]);
 		output.flush();
 
@@ -259,35 +259,40 @@ public class ToServer {
 		return null;
 	}
 
-	public String sendChangePW(String username,char[] oldPW, char[] pw, char[] pw2) {
+	public String sendChangePW(String username, char[] oldPW, char[] pw, char[] pw2) {
 		System.out.println("in sendChangePW()");
+//		try (Socket socket = new Socket(host, socketNr);
+//				Socket objectSocket = new Socket(host, objectSocketNr);
+//				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+//				DataInputStream input = new DataInputStream(socket.getInputStream())) {
 		try (Socket socket = new Socket(host, socketNr);
 				Socket objectSocket = new Socket(host, objectSocketNr);
+				ObjectOutputStream objectToServer = new ObjectOutputStream(objectSocket.getOutputStream());
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				DataInputStream input = new DataInputStream(socket.getInputStream())) {
 
 			System.out.println("sending option = \"ChangePW\"");
 			output.writeUTF("ChangePW");
 			System.out.println("sended option = \"ChangePW\"");
-			output.flush();
+//			output.flush();
 			Thread.sleep(10);
 			System.out.println("sending user");
 			output.writeUTF(username);
-			output.flush();
+//			output.flush();
 			Thread.sleep(10);
 			sendCharArray(output, oldPW);
-			output.flush();
+//			output.flush();
 			Thread.sleep(10);
 			System.out.println("sending PW");
 			sendCharArray(output, pw);
-			output.flush();
+//			output.flush();
 			Thread.sleep(10);
 
 			System.out.println("sending PW2");
 			sendCharArray(output, pw2);
 			output.flush();
 			Thread.sleep(10);
-			
+
 //			output.flush();
 			Arrays.fill(pw2, '0');
 			Arrays.fill(pw, '0');
@@ -318,7 +323,5 @@ public class ToServer {
 		ts.sendObject(o);
 
 	}
-
-	
 
 }
