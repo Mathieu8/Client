@@ -118,7 +118,7 @@ public class ChangePW {
 					lblMessage.setText("Email is allready in use");
 					lblMessage.setTextFill(Color.RED);
 					break;
-				case "Welcome":
+				case "welcome":
 					lblMessage.setText(temp);
 					lblMessage.setTextFill(Color.GREEN);
 					Duration d = Duration.seconds(2); // seconds for testing

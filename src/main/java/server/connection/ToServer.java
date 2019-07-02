@@ -26,7 +26,7 @@ import server.login.Token;
  * @author Mathieu
  * @version 09/27/2018
  */
-public class ToServer {
+public class ToServer implements Options{
 	protected static String host;
 	private int socketNr;
 	private int objectSocketNr;
@@ -45,21 +45,10 @@ public class ToServer {
 	}
 
 	public static ToServer makeConnection() {
-
 		return conn;
 	}
 
-	private void sendCharArray(DataOutputStream output, char... cs) throws IOException {
-		output.writeInt(cs.length);
-		CharBuffer.wrap(cs).chars().forEach(i -> {
-			try {
-				output.writeChar(i);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-	}
+	
 
 	/**
 	 * 
@@ -103,9 +92,7 @@ public class ToServer {
 		} catch (IOException | InterruptedException e) {
 			System.out.println("error");
 			e.printStackTrace();
-//		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+
 		}
 	}
 
@@ -158,9 +145,9 @@ public class ToServer {
 		System.out.println("waiting for conformation of the token");
 		Thread.sleep(10);
 
-		String temp = input.readUTF();
+		String temp = inputOptions(input);
 		System.out.println("temp is " + temp);
-		if (temp.equals("Correct Token")) {
+		if (temp.equals("welcome")) {
 			System.out.println("temp = " + temp);
 			return true;
 		} else {
@@ -186,19 +173,15 @@ public class ToServer {
 			System.out.println("sending PW");
 
 			sendCharArray(output, pw);
+			Arrays.fill(pw, '0');;
 
 			output.flush();
-			pw = null;
 
 			Thread.sleep(10);
 			System.out.println("waiting for conformation");
-			String temp = input.readUTF();
-			if (temp.equals("Correct pw")) {
-				System.out.println("Correct pw " + temp + '\n');
-				String t = input.readUTF();
-				Token tkn = new Token();
-				tkn.deleteFile();
-				tkn.createFile(t);
+			String temp = inputOptions(input);
+			if (temp.equals("welcome")) {
+				System.out.println("Correct pw " + temp + '\n');	
 				return true;
 			} else {
 				System.out.println(" incorrect pw " + temp + '\n');
@@ -241,12 +224,9 @@ public class ToServer {
 
 			Thread.sleep(10);
 			System.out.println("waiting for conformation");
-			String temp = input.readUTF();
+			String temp = inputOptions(input);
 			System.out.println("temp is " + temp);
-			if (temp.equals("Welcome")) {
-				String token = input.readUTF();
-				new Token().createFile(token);
-			}
+			
 			return temp;
 
 		} catch (IOException e) {
@@ -270,38 +250,24 @@ public class ToServer {
 			System.out.println("sending option = \"ChangePW\"");
 			output.writeUTF("ChangePW");
 			System.out.println("sended option = \"ChangePW\"");
-//			output.flush();
-//			Thread.sleep(10);
 			System.out.println("sending user");
 			output.writeUTF(username);
-//			output.flush();
-//			Thread.sleep(10);
 			sendCharArray(output, oldPW);
-//			output.flush();
-//			Thread.sleep(10);
 			System.out.println("sending PW");
 			sendCharArray(output, pw);
-//			output.flush();
-//			Thread.sleep(10);
 
 			System.out.println("sending PW2");
 			sendCharArray(output, pw2);
 			output.flush();
-//			Thread.sleep(10);
 
-//			output.flush();
 			Arrays.fill(pw2, '0');
 			Arrays.fill(pw, '0');
 			Arrays.fill(oldPW, '0');
 
 			Thread.sleep(10);
 			System.out.println("waiting for conformation");
-			String temp = input.readUTF();
+			String temp = inputOptions(input);
 			System.out.println("temp is " + temp);
-			if (temp.equals("Welcome")) {
-				String token = input.readUTF();
-				new Token().createFile(token);
-			}
 			return temp;
 
 		} catch (IOException e) {
