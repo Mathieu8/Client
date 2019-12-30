@@ -1,11 +1,5 @@
 LOGIN new user doesn't close after entering
 
-change PW
-
-CLIENT getting char arrays from PW fields
-
-TEST set all measurements to null except time
-
 SERVERGUI change print() to log file
 CLIENTGUI change print() to log file
 
@@ -38,3 +32,7 @@ GUI's set relevent part next to each other
 
 SERVER move objectSocket intern to the parts that need it
 CLIENT move objectSocket intern to the parts that need it
+
+CLIENT same basic GUI for all login shit
+
+CLIENT save data when server is unable to be reached

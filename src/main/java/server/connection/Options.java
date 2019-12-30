@@ -7,7 +7,7 @@ import java.nio.CharBuffer;
 
 import server.login.Token;
 
-public interface Options {
+public interface Options{
 	default String inputOptions(DataInputStream input) throws IOException {
 		var option = input.readUTF();
 		System.out.println("options: option = " + option);
@@ -27,6 +27,7 @@ public interface Options {
 		case "different pw's":
 		case "Wrong token":
 		case "wrong pw":
+		case "wrong old PW":
 		case "username allready taken":
 			return option;
 

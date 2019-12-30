@@ -23,7 +23,7 @@ import javafx.util.StringConverter;
  * @author Mathieu
  * @version 08/27/2018
  */
-public interface SliderInterface {
+public interface SliderInterface extends Reset<Slider> {
 	/**
 	 * the main method of this interface, as it will created the slider. the range
 	 * of this slider is 256.
@@ -130,5 +130,10 @@ public interface SliderInterface {
 	 */
 	default void clickSlider(int newValue) {
 		actionSlider(newValue);
+	}
+	
+	public default void reset(Slider sl) {
+		var max =sl.getMax();
+		sl.setValue(max/2);
 	}
 }

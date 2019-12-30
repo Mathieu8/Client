@@ -17,6 +17,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import gui.GUI;
 import gui.WelcomeGUI;
+import gui.measurementGUI.PWField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -30,15 +31,13 @@ import server.connection.ToServer;
 public class LoginGUI {
 	Duration d = Duration.seconds(2); 
 
-	Timeline twoSecondsWonder = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
+	Timeline twoSecondsTillExit = new Timeline(new KeyFrame(d, new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent event) {
 			GUI gui = new GUI();
 			gui.initialize();
 			gui.showStage();
 			stage.hide();
-			
-
 		}
 	}));
 
@@ -66,7 +65,7 @@ public class LoginGUI {
 			Label lblUserName = new Label("Username");
 			final TextField txtUserName = new TextField();
 			Label lblPassword = new Label("Password");
-			final PasswordField pf = new PasswordField();
+			final PWField pf = new PWField();
 			Button btnLogin = new Button("Login");
 			Button btnNewUser = new Button("New User");
 			final Label lblMessage = new Label();
@@ -74,7 +73,7 @@ public class LoginGUI {
 			gridPane.add(lblUserName, 0, 0);
 			gridPane.add(txtUserName, 1, 0);
 			gridPane.add(lblPassword, 0, 1);
-			gridPane.add(pf, 1, 1);
+			gridPane.add(pf.getPWField(), 1, 1);
 			gridPane.add(btnLogin, 2, 1);
 			gridPane.add(btnNewUser, 0, 3);
 			gridPane.add(lblMessage, 1, 2);
@@ -97,6 +96,7 @@ public class LoginGUI {
 			gridPane.setId("root");
 			btnLogin.setId("btnLogin");
 			btnLogin.setDefaultButton(true);
+			btnLogin.setPrefSize(50, 50);
 			text.setId("text");
 			// Action for btnLogin
 
@@ -109,7 +109,7 @@ public class LoginGUI {
 					User.setUserName(userName);
 
 //					String checkPw = pf.getText().toString();
-					char[] pw = pf.getText().toCharArray();
+					char[] pw = pf.getPW();
 
 					boolean temp = ToServer.makeConnection().sendPW(userName, pw);
 					if (temp) {
@@ -123,7 +123,7 @@ public class LoginGUI {
 						lblMessage.setTextFill(Color.RED);
 					}
 					txtUserName.setText("");
-					pf.setText("");
+					pf.resetField();
 
 					event.consume();
 				}
@@ -170,7 +170,7 @@ public class LoginGUI {
 	}
 
 	void startTimer() {
-		twoSecondsWonder.play();
+		twoSecondsTillExit.play();
 		resetCounter();
 		WelcomeGUI.hideStage();
 	}

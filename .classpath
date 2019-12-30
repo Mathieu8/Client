@@ -6,45 +6,14 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="bin/main" path="src/main/resources">
-		<attributes>
-			<attribute name="gradle_scope" value="main"/>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" output="bin/test" path="src/test/java">
 		<attributes>
 			<attribute name="gradle_scope" value="test"/>
 			<attribute name="gradle_used_by_scope" value="test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="bin/test" path="src/test/resources">
-		<attributes>
-			<attribute name="gradle_scope" value="test"/>
-			<attribute name="gradle_used_by_scope" value="test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11/">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Mathieu/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/11.0.1/c4a7cbfbb28713a29883f7c1c3433b841239f8e7/javafx-controls-11.0.1-win.jar" sourcepath="C:/Users/Mathieu/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/11.0.1/8744d46bd669b223897dce8fbc75b78f7d661a11/javafx-controls-11.0.1-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Mathieu/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/11.0.1/8ec761df8ab0df38ea43f4e7a3018a2991f786f6/javafx-graphics-11.0.1-win.jar" sourcepath="C:/Users/Mathieu/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/11.0.1/74aca78315d801b768247cd3dec088a99bbc577/javafx-graphics-11.0.1-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Mathieu/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-base/11.0.1/24f4f0f3a4c3e1ea536e463781fe799e3a7ac857/javafx-base-11.0.1-win.jar" sourcepath="C:/Users/Mathieu/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-base/11.0.1/b0224723296545d84a42eb8a4c8a6fbe01351850/javafx-base-11.0.1-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11/"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="src" path="/Core"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

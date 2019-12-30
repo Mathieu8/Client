@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
 /**
  * this class launches the javaFX application. <BR>
  * Right now the timer is also launched from here,<BR>
@@ -32,9 +31,9 @@ import javafx.util.Duration;
  * @version 09/27/2018
  *
  */
-public class GUI  {
-	static MeasurmentGUI measurment;
-	static Stage measurmentGUI;
+public class GUI {
+	MeasurmentGUI measurment;
+	Stage measurmentGUI;
 	static Stage main = null;
 	public static TextArea welcome;
 
@@ -50,8 +49,8 @@ public class GUI  {
 			StackPane root = new StackPane();
 			MenuBar menuBar = new MBar().getMenuBar();
 			VBox vb = new VBox();
-			
-			vb.getChildren().addAll(menuBar , welcome);
+
+			vb.getChildren().addAll(menuBar, welcome);
 			root.getChildren().addAll(vb);
 
 			Scene scene = new Scene(root, 300, 250);
@@ -62,7 +61,7 @@ public class GUI  {
 			Duration d = // Duration.seconds(5); // seconds for testing
 					// d.add(Duration.minutes(50)); // minutes for use
 					Duration.INDEFINITE; // so it never launches during testing
-			measurmentGUI = measurment.initialized();
+			
 
 //		Login.loginEntry().tokenValid();
 
@@ -73,9 +72,7 @@ public class GUI  {
 					Platform.runLater(() -> {
 						welcome.appendText("this is called every " + d + " on UI thread" + '\n');
 					});
-					measurment.setUID(1);
-					measurment.reset(1);
-					measurmentGUI.show();
+					launchMeasurements();
 				}
 			}));
 			fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
@@ -87,8 +84,8 @@ public class GUI  {
 	public void showStage() {
 		main.show();
 	}
-	
-	public static void hideStage() {
+
+	public static  void hideStage() {
 		main.hide();
 	}
 
@@ -101,5 +98,21 @@ public class GUI  {
 			});
 		}
 	}
+	
+	public void launchMeasurements() {
+		GUI.print("in launchMeasurements");
+		measurment = new MeasurmentGUI();
+		GUI.print("in launchMeasurements: made new measurement");
+		measurment.setUID(1);
+		GUI.print("in launchMeasurements: setUID");
+		measurmentGUI = measurment.initialized();
+		GUI.print("in launchMeasurements: initialized");
+		measurment.reset(1);
+		GUI.print("in launchMeasurements: reset");
+		measurmentGUI.show();
+		GUI.print("in launchMeasurements: show");
+	}
+	
+	
 
 }

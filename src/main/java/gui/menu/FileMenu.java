@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+import gui.GUI;
 import gui.measurementGUI.MeasurmentGUI;
 
 public class FileMenu {
@@ -38,9 +39,7 @@ public class FileMenu {
 		measurmentGUI = measurment.initialized();
 		MenuItem testItem = new MenuItem("Measurment");
 		testItem.setOnAction(e -> {
-			measurment.setUID(1);
-			measurment.reset(1);
-			measurmentGUI.show();
+			new GUI().launchMeasurements();
 		});		
 		
 		return testItem;		

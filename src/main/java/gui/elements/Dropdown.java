@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
  * @version 08/23/2018
  */
 
-public interface Dropdown {
+public interface Dropdown extends Reset<ComboBox<String>> {
 
 	/**
 	 * a basic comboBox is created with this method.
@@ -25,7 +25,9 @@ public interface Dropdown {
 	 * @return comboBox<String>
 	 */
 	public default ComboBox<String> dropDownVBox(String[] s) {
+
 		ComboBox<String> dropdownBox = new ComboBox<>();
+		dropdownBox.getItems().add("");
 		for (int i = 0; i < s.length; i++) {
 			dropdownBox.getItems().add(s[i]);
 		}
@@ -48,4 +50,12 @@ public interface Dropdown {
 	 * @param newValue - the new value of the comboBox.
 	 */
 	public void actionComboBox(String oldValue, String newValue);
+
+	public default void reset(ComboBox<String> cb) {
+		cb.valueProperty().set("");
+	}
+
+	public default void reset(ComboBox<String> cb, String s) {
+		cb.valueProperty().set(s);
+	}
 }

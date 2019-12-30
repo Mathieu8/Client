@@ -18,6 +18,7 @@ import gui.WelcomeGUI;
  *
  */
 public class MainClient {
+	public static boolean TESTMODE = true;
 
 	/**
 	 * see the class description

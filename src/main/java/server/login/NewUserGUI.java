@@ -3,6 +3,7 @@ package server.login;
 import java.util.Arrays;
 import gui.GUI;
 import gui.WelcomeGUI;
+import gui.measurementGUI.PWField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -43,9 +44,9 @@ public class NewUserGUI {
 		Label lblUserName = new Label("Username");
 		final TextField txtUserName = new TextField();
 		Label lblPassword = new Label("Password");
-		final PasswordField pf = new PasswordField();
+		final PWField pf = new PWField();
 		Label lblPassword2 = new Label("Repeat Password");
-		final PasswordField pf2 = new PasswordField();
+		final PWField pf2 = new PWField();
 		Button btnLogin = new Button("Create Account");
 		final Label lblMessage = new Label();
 		// Adding Nodes to GridPane layout
@@ -54,9 +55,9 @@ public class NewUserGUI {
 		gridPane.add(lblUserName, 0, 0);
 		gridPane.add(txtUserName, 1, 0);
 		gridPane.add(lblPassword, 0, 1);
-		gridPane.add(pf, 1, 1);
+		gridPane.add(pf.getPWField(), 1, 1);
 		gridPane.add(lblPassword2, 0, 2);
-		gridPane.add(pf2, 1, 2);
+		gridPane.add(pf2.getPWField(), 1, 2);
 		gridPane.add(btnLogin, 3, 2);
 		fields.getChildren().add(gridPane);
 		fields.getChildren().add(lblMessage);
@@ -90,8 +91,8 @@ public class NewUserGUI {
 				String userName = txtUserName.getText().toString();
 				String temp = null;
 //				String checkPw = pf.getText().toString();
-				char[] pw = pf.getText().toCharArray();
-				char[] pw2 = pf2.getText().toCharArray();
+				char[] pw = pf.getPW();
+				char[] pw2 = pf2.getPW();
 				
 				if (!userName.contains("@ict-stadsbrug.nl")) {
 					temp = "use a ict-stadsbrug email adress during testing";
@@ -135,8 +136,8 @@ public class NewUserGUI {
 //					lblMessage.setTextFill(Color.RED);
 //				}
 				txtUserName.setText("");
-				pf.setText("");
-				pf2.setText("");
+				pf.resetField();
+				pf2.resetField();
 				
 				event.consume();
 			}

@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import measurements.Measurements;
 import gui.SaveBtn;
+import gui.elements.Close;
 
 /**
  * This class makes a GUI for the measurement in the Core. So this is the place
@@ -27,49 +28,54 @@ import gui.SaveBtn;
  * @version 09/27/2018
  *
  */
-public class MeasurmentGUI {
+public class MeasurmentGUI implements Close{
 
 	/*
 	 * important, cause startGUI creates a new instance of this class to run
 	 * everything from it is required to make it static
 	 */
-	static Measurements m;
+	Measurements m;
 	int UID;
 
-	//initializers for classes that are needed
-	public static Stage stage = new Stage();
-	SaveBtn saveButton = new SaveBtn();
+	// initializers for classes that are needed
+	Stage stage = null;
+	SaveBtn saveButton = new SaveBtn(this);
 	Smileys smileys = new Smileys();
 	Activity activity = new Activity();
 	Productivity productivity = new Productivity();
-	
-	//all the elements that are used later
-	VBox layout = new VBox(); 
+
+	// all the elements that are used later
+	VBox layout = new VBox();
 	VBox smileyBox = smileys.smileys();
 	VBox activityBox = activity.activiteitVBox();
-	VBox productivityBox =  productivity.prodSlider();
+	VBox productivityBox = productivity.prodSlider();
 	HBox saveBox = saveButton.saveBtn();
 
 	/**
 	 * 
 	 * 
-	 * @return Stage to measure the measurement. 
+	 * @return Stage to measure the measurement.
 	 */
 	public Stage initialized() {
-		setUID(1);
-		GridPane root = new GridPane();
-		root.setHgap(10);
-		root.setVgap(10);
+		System.out.println("MeasurementGUI: initialized");
+		if (stage == null) {
+			stage = new Stage();
+			System.out.println("MeasurementGUI: initialized stage");
+			setUID(1);
+			GridPane root = new GridPane();
+			root.setHgap(10);
+			root.setVgap(10);
 
-		layout.getChildren().addAll(smileyBox, activityBox, productivityBox, saveBox);
+			layout.getChildren().addAll(smileyBox, activityBox, productivityBox, saveBox);
 
-		root.getChildren().add(layout); 
-		root.setMinSize(300, 250);
-		root.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
-				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: BLACK;");
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setTitle("Self Management Tool");
+			root.getChildren().add(layout);
+			root.setMinSize(300, 250);
+			root.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
+					+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: BLACK;");
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.setTitle("Self Management Tool");
+		}
 		return stage;
 	}
 
@@ -82,15 +88,14 @@ public class MeasurmentGUI {
 	public void setUID(int UID) {
 		this.UID = UID;
 		m = new Measurements(UID, LocalDateTime.now());
-		Smileys.setMeasurement(m);
-		Activity.setM(m);
-		Productivity.setMeasurement(m);
+		smileys.setMeasurement(m);
+		activity.setM(m);
+		productivity.setMeasurement(m);
 		saveButton.setObject(m);
 	}
-	
-	
+
 	/**
-	 * Here it should reset the stage each time it's launched 
+	 * Here it should reset the stage each time it's launched
 	 * 
 	 * @param UID - it might be used later
 	 */
@@ -98,8 +103,18 @@ public class MeasurmentGUI {
 		setUID(UID);
 		stage.hide();
 		layout.getChildren().removeAll(smileyBox, activityBox, productivityBox, saveBox);
-		
-		
-		layout.getChildren().addAll(smileyBox, activityBox, productivityBox, saveBox);		
+		layout.getChildren().addAll(smileyBox, activityBox, productivityBox, saveBox);
+		activity.reset();
+		productivity.reset();
+		smileys.reset();
 	}
+
+	@Override
+	public void close() {
+		stage.hide();
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }

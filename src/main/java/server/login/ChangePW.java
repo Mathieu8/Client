@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import gui.GUI;
 import gui.WelcomeGUI;
+import gui.elements.Close;
+import gui.measurementGUI.PWField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -28,9 +30,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.connection.ToServer;
 
-public class ChangePW {
+public class ChangePW implements Close{
 	Stage stage = new Stage();
-	
+
 	public void initialized() {
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(0, 50, 50, 50));
@@ -47,24 +49,24 @@ public class ChangePW {
 		final TextField usernameFld = new TextField();
 
 		Label lbloldPW = new Label("Old Password");
-		final PasswordField oldPWfld = new PasswordField();
+		final PWField oldPWfld = new PWField();
 		Label lblPassword = new Label("New Password");
-		final PasswordField pf = new PasswordField();
+		final PWField pf = new PWField();
 		Label lblPassword2 = new Label("Repeat Password");
-		final PasswordField pf2 = new PasswordField();
+		final PWField pf2 = new PWField();
 		Button btnLogin = new Button("Create Account");
 		final Label lblMessage = new Label();
 		// Adding Nodes to GridPane layout
 		VBox fields = new VBox();
-		
-		gridPane.add(lblUserName,0,0);
+
+		gridPane.add(lblUserName, 0, 0);
 		gridPane.add(usernameFld, 1, 0);
 		gridPane.add(lbloldPW, 0, 1);
-		gridPane.add(oldPWfld, 1, 1);
+		gridPane.add(oldPWfld.getPWField(), 1, 1);
 		gridPane.add(lblPassword, 0, 2);
-		gridPane.add(pf, 1, 2);
+		gridPane.add(pf.getPWField(), 1, 2);
 		gridPane.add(lblPassword2, 0, 3);
-		gridPane.add(pf2, 1, 3);
+		gridPane.add(pf2.getPWField(), 1, 3);
 		gridPane.add(btnLogin, 3, 3);
 		fields.getChildren().add(gridPane);
 		fields.getChildren().add(lblMessage);
@@ -96,16 +98,16 @@ public class ChangePW {
 			public void handle(ActionEvent event) {
 				System.out.println("in actionhandler");
 				String username = usernameFld.getText();
-				char[] oldPW = oldPWfld.getText().toCharArray();
+				char[] oldPW = oldPWfld.getPW();
 				String temp = null;
-//					String checkPw = pf.getText().toString();
-				char[] pw = pf.getText().toCharArray();
-				char[] pw2 = pf2.getText().toCharArray();
+				char[] pw = pf.getPW();
+
+				char[] pw2 = pf2.getPW();
 
 				if (Arrays.equals(pw, null) || Arrays.equals(pw2, null)) {
 					temp = "insert all the fields";
 				} else {
-					temp= ToServer.makeConnection().sendChangePW(username, oldPW, pw, pw2);
+					temp = ToServer.makeConnection().sendChangePW(username, oldPW, pw, pw2);
 				}
 				System.out.println(temp);
 
@@ -131,6 +133,7 @@ public class ChangePW {
 //									fiveSecondsWonder.stop();
 							new WelcomeGUI().setLoginValid(true);
 							stage.hide();
+							close();
 						}
 					}));
 
@@ -149,9 +152,9 @@ public class ChangePW {
 //						lblMessage.setText("Incorrect user or pw.");
 //						lblMessage.setTextFill(Color.RED);
 //					}
-				oldPWfld.setText("");
-				pf.setText("");
-				pf2.setText("");
+				oldPWfld.resetField();
+				pf.resetField();
+				pf2.resetField();
 				event.consume();
 			}
 
@@ -164,8 +167,15 @@ public class ChangePW {
 		Scene scene = new Scene(bp);
 		stage.setScene(scene);
 	}
-	
+
 	public void show() {
 		stage.show();
+	}
+
+	@Override
+	public void close() {
+		stage.hide();
+		// TODO Auto-generated method stub
+		
 	}
 }

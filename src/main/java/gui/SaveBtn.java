@@ -1,6 +1,11 @@
 package gui;
 
+import client.MainClient;
+import client.TestMode;
+import gui.elements.Close;
 import gui.measurementGUI.MeasurmentGUI;
+import gui.measurementGUI.Productivity;
+import gui.menu.TestMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -8,6 +13,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import measurements.BasicMeasurements;
+import measurements.Measurements;
 import server.connection.ToServer;
 
 /**
@@ -23,16 +29,22 @@ import server.connection.ToServer;
  */
 
 public class SaveBtn {
-	static BasicMeasurements obj;
-	MeasurmentGUI gui;
-	String text = "save";
-	String tooltip = "save";
+	private Close GUI;
+	
+	private BasicMeasurements obj;
+	private String text = "save";
+	private String tooltip = "save";
+	
+	public SaveBtn(Close gui) {
+		this.GUI=gui;
+		
+	}
 
 	/**
 	 * @return Button
 	 */
 	public Button createBtn() {
-		Button btn = new Button("save");
+		Button btn = new Button(text);
 		Tooltip emotieTemp = new Tooltip(tooltip);
 		btn.setTooltip(emotieTemp);
 		btn.setMinWidth(50.0);
@@ -68,9 +80,12 @@ public class SaveBtn {
 	 * server.login.
 	 */
 	private void toSave() {
+		if(MainClient.TESTMODE) {
+			new TestMode().setAllDataToNull(obj); 
+		}
 		obj.setDuraction();
 		ToServer.sendToServer(obj);
-		MeasurmentGUI.stage.hide();
+		GUI.close();
 	}
 
 	/**
